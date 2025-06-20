@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch products on component mount
+  const navigate = useNavigate();
+
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
       .then((res) => res.json())
@@ -33,7 +35,10 @@ const Products = () => {
             <img src={product.image} alt={product.title} className="h-40 object-contain mb-4" />
             <h2 className="font-semibold text-sm line-clamp-2 mb-2">{product.title}</h2>
             <p className="text-green-600 font-bold mb-2">${product.price}</p>
-            <button className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded">
+            <button
+                onClick={() => navigate(`/products/${product.id}`)} // ✅ navigate to details page
+                className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded"
+            >
               View
             </button>
           </div>
